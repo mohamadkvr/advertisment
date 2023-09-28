@@ -2,7 +2,14 @@ import { Model } from "mongoose";
 import nodeCache from "node-cache";
 import models from './modelManagement'
 import { populate } from "dotenv";
-const {  categoryModel} = models
+const { 
+  category,
+  user,
+  provider,
+  admin,
+  media,
+  location,
+  adminGroup} = models
 import { IPaginate } from "../helper/interfaceManagement";
 const memory = new nodeCache();
 
@@ -59,6 +66,8 @@ export class DbService {
     return memory.get(key);
   }
   protected schemaHandler(model :String): Model<any>{
-        return model === "category" ? categoryModel: categoryModel              
+        return model === "category" ? category:  model === "admin" ? admin :
+               model === "provider" ? provider : model === "user" ? user  :
+               model === "adminGroup" ? adminGroup : model === "location" ? location : media            
   }
 }

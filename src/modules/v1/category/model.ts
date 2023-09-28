@@ -30,7 +30,4 @@ const CategorySchema = new Schema<ICategory>({
 },{timestamps:true});
 
 CategorySchema.plugin(mongoosePaginate)
-
-const CategoryModel = model<ICategory>('Category', CategorySchema);
-
-export default CategoryModel;
+export default model<ICategory>('Category', CategorySchema);

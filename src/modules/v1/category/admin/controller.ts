@@ -1,4 +1,4 @@
-import {DbService} from '../../../../services/v1/databaseService/db'
+import {DbService} from '../../../../services/v1/mongoDbService/db'
 import { Router, Request, Response , NextFunction} from 'express';
 import {Utils} from '../../../../services/v1/helper/utils'
 const utils = Utils.getInstance()

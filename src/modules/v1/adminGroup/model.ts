@@ -19,4 +19,4 @@ const AdminGroupSchema = new Schema<IAdminGroup>({
 
 AdminGroupSchema.plugin(mongoosePaginate)
 
-export default model<IAdminGroup>('admin', AdminGroupSchema);
+export default model<IAdminGroup>('adminGroup', AdminGroupSchema);

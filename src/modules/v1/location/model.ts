@@ -61,4 +61,4 @@ const locationSchema = new Schema<ILocation>({
 
 locationSchema.plugin(mongoosePaginate)
 
-export default model<ILocation>('businessLocation', locationSchema);
+export default model<ILocation>('location', locationSchema);
