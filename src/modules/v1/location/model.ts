@@ -4,7 +4,7 @@ import { IProvider } from '../provider/model';
 import { ICategory } from '../category/model';
 import  mongoosePaginate from 'mongoose-paginate-v2';
 
-export interface IBusinessLocation extends Document {
+export interface ILocation extends Document {
   _id: string;
   providerId:IProvider | string;
   categories:[ICategory] | [string];
@@ -27,7 +27,7 @@ export interface IBusinessLocation extends Document {
   updatedAt: Date;
 }
 
-const businessLocationSchema = new Schema<IBusinessLocation>({
+const locationSchema = new Schema<ILocation>({
   providerId:{type: Schema.Types.ObjectId , ref : 'provider' },
   categories:[{type: Schema.Types.ObjectId , ref : 'Category' }],
   lat: {type:Number},
@@ -59,6 +59,6 @@ const businessLocationSchema = new Schema<IBusinessLocation>({
   ]
 },{timestamps:true});
 
-businessLocationSchema.plugin(mongoosePaginate)
+locationSchema.plugin(mongoosePaginate)
 
-export default model<IBusinessLocation>('businessLocation', businessLocationSchema);
+export default model<ILocation>('businessLocation', locationSchema);

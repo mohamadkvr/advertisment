@@ -13,8 +13,3 @@ router.get('/getSome',controller.getSome.bind(controller))
 router.delete('/delete',middleware.removeValidation.bind(middleware),
 controller.remove.bind(controller))                        
 export default router;
-
-
-
-
-

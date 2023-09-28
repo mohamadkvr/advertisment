@@ -1,11 +1,11 @@
 import { Router} from 'express';
-import categoryController from './controller'
+import controller from './controller'
 import middlewares from './middlewares';
 const router: Router = Router();
 
 router.get('/getSome',
 middlewares.getSomeValidation.bind(middlewares)
-        ,categoryController.getSome.bind(categoryController))
+        ,controller.getSome.bind(controller))
                     
 export default router;
 
