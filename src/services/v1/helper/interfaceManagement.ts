@@ -1,11 +1,5 @@
-import {ICategory} from '../../../modules/v1/category/model'
-import { FormInterface } from '../../../modules/v1/form/formModel'
-import { FormSectionInterface } from '../../../modules/v1/form/formSectionModel'
+import { ICategory } from "../../../modules/v1/category/model";
 
-
-export interface  ICat extends ICategory{};
-export interface  IForm extends FormInterface{};
-export interface  IFormSection extends FormSectionInterface{};
 export interface IPaginate {
     docs: [ICategory] | [null],
     totalDocs: number | null,

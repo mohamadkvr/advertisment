@@ -5,7 +5,6 @@ import cors from "cors"
 import morgan from "morgan";
 import categoryRouter from './modules/v1/category/admin/routes'
 import userCategoryRouter from './modules/v1/category/user/routes'
-import formRouter from "./modules/v1/form/admin/routes"
 
 import { IError } from "./services/v1/helper/error";
 // import userRoutes from "./http/routes/user/index"
@@ -52,8 +51,6 @@ export class App {
         ///////////////////////admin////////////////////////////////////
         //category
         this.app.use('/api/v1/admin/category',categoryRouter)
-        //form 
-        this.app.use('/api/v1/admin/form',formRouter)
         //////////////////////user/////////////////////////////////////
         // category
         this.app.use('/api/v1/user/category',userCategoryRouter)

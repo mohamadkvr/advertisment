@@ -1,14 +1,14 @@
 import {DbService} from '../../../../services/v1/databaseService/db'
 import { Router, Request, Response , NextFunction} from 'express';
-import { ICat } from '../../../../services/v1/helper/interfaceManagement';
 import {Utils} from '../../../../services/v1/helper/utils'
 const utils = Utils.getInstance()
 import transform  from './transform';
+import { ICategory } from '../model';
 
 export default new class service extends DbService {
      async add(req:Request, res:Response, next: NextFunction) {
         try {
-            let newCategory: ICat | null = await this.create<ICat>(this.schemaHandler('category'),{
+            let newCategory: ICategory | null = await this.create<ICategory>(this.schemaHandler('category'),{
                 title: req.body.title,
                 slug:utils.slugGenerator(req.body.slug),
                 ...(req.body.description && {description: req.body.description}),
@@ -21,7 +21,7 @@ export default new class service extends DbService {
      }
      async edit(req:Request, res:Response, next: NextFunction) {
         try {
-            const updatedCategory = await this.update<ICat>(await this.schemaHandler('category'),{_id:req.params.id},{
+            const updatedCategory = await this.update<ICategory>(await this.schemaHandler('category'),{_id:req.params.id},{
                 ...req.body,
                 ...(req.body.slug && {slug:utils.slugGenerator(req.body.slug)})
             },true)
