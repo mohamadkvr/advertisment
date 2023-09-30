@@ -9,9 +9,7 @@ export class CustomError extends Error implements IError{
 
     constructor(status: number, message: string) {
         super(message);
-
         this.status = status;
-
         // 👇️ because we are extending a built-in class
         Object.setPrototypeOf(this, CustomError.prototype);
     }

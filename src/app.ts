@@ -5,13 +5,14 @@ import cors from "cors"
 import morgan from "morgan";
 import categoryRouter from './modules/v1/category/admin/routes'
 import userCategoryRouter from './modules/v1/category/user/routes'
+import adminAuthenticationRouter from './modules/v1/admin/auth/routes'
 
 import { IError } from "./services/v1/helper/error";
 // import userRoutes from "./http/routes/user/index"
 
 
 export class App {
-    private app :Express = express()
+    public app :Express = express()
     private static instance: App;
     private constructor(private port: number, private mongoUri: string) {
         this.setMongoConnection(mongoUri)
@@ -49,6 +50,8 @@ export class App {
     }
     private setRouters(){
         ///////////////////////admin////////////////////////////////////
+        //admin
+        this.app.use('/api/v1/admin',adminAuthenticationRouter)
         //category
         this.app.use('/api/v1/admin/category',categoryRouter)
         //////////////////////user/////////////////////////////////////

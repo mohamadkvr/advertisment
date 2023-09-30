@@ -1,4 +1,8 @@
 import {Response } from 'express';
+import jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcryptjs';
+
+
 interface IUtils {
     responseMsgHandler(method: String, msg:String):string,
     responseHandler(res:Response,status:number , msg: string, data: Object | null):object,
@@ -11,7 +15,7 @@ export class Utils implements IUtils{
             Utils.instance = new Utils();
         }
         return Utils.instance;
-        }
+    }
     public responseMsgHandler(method: String, msg:String):string {
         return method === "GET" ?  msg +" با موفقیت ارسال شد."  :
                method === "POST" ? msg + " باموفقیت ساخته شد.":
@@ -28,5 +32,14 @@ export class Utils implements IUtils{
         const lowercased = input.toLowerCase();
         const slug = lowercased.replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
         return slug.replace(/^-+|-+$/g, '');
-      }
+    }
+    public generateToken(payload:object,secretKey:string,expirDate:object): string{
+        return jwt.sign(payload, secretKey, expirDate);
+    }
+    public async hash(data:string){
+        return bcrypt.hashSync(data, 10)
+    }
+    public async compare(data:string,hash:string){
+       return bcrypt.compareSync(data,hash);
+    }
 }
