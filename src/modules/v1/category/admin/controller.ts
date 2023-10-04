@@ -7,32 +7,38 @@ import { ICategory } from '../model';
 
 export default new class service extends DbService {
      async add(req:Request, res:Response, next: NextFunction) {
-        try {
-            let newCategory: ICategory | null = await this.create<ICategory>(this.schemaHandler('category'),{
-                title: req.body.title,
-                slug:utils.slugGenerator(req.body.slug),
-                ...(req.body.description && {description: req.body.description}),
-                ...(req.body.parentId && {parentId:req.body.parentId})
-               },true)
-               return utils.responseHandler(res,201,utils.responseMsgHandler("POST","گتگوری"),transform.getOne(newCategory))
+        try { 
+               return utils.responseHandler(res,201,utils.responseMsgHandler("POST","گتگوری"),transform.getOne(
+                //////insert in db///////
+                    await this.create<ICategory>(this.schemaHandler('category'),{
+                    title: req.body.title,
+                    slug:utils.slugGenerator(req.body.slug),
+                    ...(req.body.description && {description: req.body.description}),
+                    ...(req.body.parentId && {parentId:req.body.parentId})
+                    },true))  
+                /////////////////////////      
+               )
         } catch (error) {
               next(error)
         }
      }
      async edit(req:Request, res:Response, next: NextFunction) {
         try {
-            const updatedCategory = await this.update<ICategory>(await this.schemaHandler('category'),{_id:req.params.id},{
-                ...req.body,
-                ...(req.body.slug && {slug:utils.slugGenerator(req.body.slug)})
-            },true)
-            return utils.responseHandler(res,201,utils.responseMsgHandler(req.method,"گتگوری"),transform.getOne(updatedCategory))
+            return utils.responseHandler(res,201,utils.responseMsgHandler(req.method,"گتگوری"),transform.getOne(
+                /////update query/////////////
+                await this.update<ICategory>(await this.schemaHandler('category'),{_id:req.params.id},{
+                    ...req.body,
+                    ...(req.body.slug && {slug:utils.slugGenerator(req.body.slug)})
+                },true)
+                /////////////////////////////
+            ))
         } catch (error) {
             next(error)
         }
      }
      async getOne(req:Request, res:Response, next: NextFunction) {
         try {
-            return utils.responseHandler(res,201,utils.responseMsgHandler(req.method,"گتگوری"),transform.getOne(
+            return utils.responseHandler(res,200,utils.responseMsgHandler(req.method,"گتگوری"),transform.getOne(
                 await this.findOne(this.schemaHandler('category'),{_id:req.params.id})
             ))
         } catch (error) {
@@ -41,7 +47,7 @@ export default new class service extends DbService {
      }
      async getSome(req:Request, res:Response, next: NextFunction) {
         try {
-            return utils.responseHandler(res,201,utils.responseMsgHandler(req.method,"گتگوری"),transform.getSome(
+            return utils.responseHandler(res,200,utils.responseMsgHandler(req.method,"گتگوری"),transform.getSome(
                 await this.findAndSelectAndPopulationPaginate(await this.schemaHandler('category') , {} ,
                     {populate : [],sort:{createdAt : -1}, page: req.query.page || 1,limit : req.query.limit|| 10})
             ))
@@ -52,9 +58,8 @@ export default new class service extends DbService {
      }
      async remove(req:Request, res:Response, next: NextFunction) {
         try {
-            console.log(req.body.ids)
            await this.delete(await this.schemaHandler('category'),{_id:{$in:req.body.ids}})
-           return utils.responseHandler(res,201,utils.responseMsgHandler(req.method,"گتگوری"),null)
+           return utils.responseHandler(res,200,utils.responseMsgHandler(req.method,"گتگوری"),null)
         } catch (error) {
             console.log(error)
             next(error)   

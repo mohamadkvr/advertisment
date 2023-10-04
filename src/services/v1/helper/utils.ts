@@ -36,10 +36,29 @@ export class Utils implements IUtils{
     public generateToken(payload:object,secretKey:string,expirDate:object): string{
         return jwt.sign(payload, secretKey, expirDate);
     }
+    public async  decodeTokenAsync(token:string, secretKey:string) {
+        return new Promise((resolve, reject) => {
+          jwt.verify(token, secretKey, (err, decoded) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(decoded);
+            }
+          });
+        });
+      }
     public async hash(data:string){
         return bcrypt.hashSync(data, 10)
     }
     public async compare(data:string,hash:string){
        return bcrypt.compareSync(data,hash);
+    }
+    public generateRandomString(length:number) {
+      let result = '';
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
     }
 }

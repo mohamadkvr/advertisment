@@ -3,6 +3,7 @@ import { Request, Response ,NextFunction} from 'express';
 import {CustomError} from '../../../../services/v1/helper/error'
 import { schema } from './validation';
 import { Utils } from '../../../../services/v1/helper/utils';
+import jwt from 'jsonwebtoken';
 const util = Utils.getInstance()
 
 export default new class middleware extends DbService{

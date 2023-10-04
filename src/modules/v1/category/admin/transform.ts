@@ -22,6 +22,7 @@ export default {
                         title:data?.title,
                         ...(data?.description && {description:data?.description}),
                         ...(data?.parentId && {parentId:data?.parentId}),
+                        slug:data?.slug,
                         createdAt:data?.createdAt,
                         updatedAt:data?.updatedAt
                     }

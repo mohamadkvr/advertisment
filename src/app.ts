@@ -6,6 +6,7 @@ import morgan from "morgan";
 import categoryRouter from './modules/v1/category/admin/routes'
 import userCategoryRouter from './modules/v1/category/user/routes'
 import adminAuthenticationRouter from './modules/v1/admin/auth/routes'
+import cookieParser from 'cookie-parser';
 
 import { IError } from "./services/v1/helper/error";
 // import userRoutes from "./http/routes/user/index"
@@ -44,6 +45,7 @@ export class App {
     private setConfig(){
         this.app.use(express.json())
         this.app.use(express.urlencoded({extended:false}))
+        this.app.use(cookieParser());
         this.app.use("/public", express.static("./public"));
         this.app.use(cors())
         this.app.use(morgan("dev"))
@@ -63,6 +65,7 @@ export class App {
     }
     private setError(){
         this.app.use((error:IError ,req: Request, res: Response,next : NextFunction) => {
+            console.log(error)
             res.status(error.status || 500).json({msg:error.message,status:error.status})
         });
     }

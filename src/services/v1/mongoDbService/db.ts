@@ -43,7 +43,7 @@ export class DbService {
   protected async findAndSelectAndPopulationPaginate(model: any, which: object, hasPaging={}):Promise<IPaginate> {
     return await model.paginate(which ? which : {} , hasPaging);
 };
-  protected async findOne(model: Model<any>, which: object) {
+  public async findOne(model: Model<any>, which: object) {
     return model.findOne(which);
   }
   protected async findOneAndPopulate(model: Model<any>, which: object, populate: string[]) {
