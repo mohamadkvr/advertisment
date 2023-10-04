@@ -3,6 +3,7 @@ import { Request, Response ,NextFunction} from 'express';
 import {CustomError} from '../../../../services/v1/helper/error'
 import { signUpschema, sendVerificationCodeSchema, signInSchema } from './validation';
 import { Utils } from '../../../../services/v1/helper/utils';
+import jwt from 'jsonwebtoken';
 const util = Utils.getInstance()
 
 export default new class middleware extends DbService{
@@ -38,6 +39,34 @@ export default new class middleware extends DbService{
         }
         return next()
     }
-    async removeValidation(req:Request,res:Response,next:NextFunction){
+    async auth(req:Request,res:Response,next:NextFunction){
+        try {
+            const token = req.headers["x-api-key"] ||  req.cookies["x-api-key"]
+            if(!token) {
+                return next(new CustomError(401,"Unauthorized"))
+            }else {
+                jwt.verify(token, process.env.SECRET_KEY || "", async(err:any, decoded:any) => {
+                    if (err) {
+                        return next(new CustomError(401,"Unauthorized"))
+                    }else {
+    
+                        if(decoded && decoded._id){
+                            let provider = await this.findOne(this.schemaHandler('provider'),{_id:decoded._id})
+                            if(provider) {
+                                (req as any).ofToken = provider
+                                return next()
+                            }
+                            return next(new CustomError(401,"Unauthorized"))
+                        }else {
+                            return next(new CustomError(401,"Unauthorized"))
+                        }
+                    }
+                });
+            }
+        } catch (error) {
+            if(error) {
+                return next(new CustomError(401,"Unauthorized"))
+            }
+        }
     }
 }
