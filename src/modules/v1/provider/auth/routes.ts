@@ -3,13 +3,6 @@ import controller from './controller'
 import middleware from './middlewares'
 const router: Router = Router();
 
-router.post('/create',middleware.createValidation.bind(middleware)
-        ,controller.add.bind(controller))
-router.patch('/update/:id',middleware.updateValidation.bind(middleware)
-        ,controller.edit.bind(controller))
-router.get('/getOne/:id',middleware.getOneValidation.bind(middleware),
-controller.getOne.bind(controller))
-router.get('/getSome',controller.getSome.bind(controller))
-router.delete('/delete',middleware.removeValidation.bind(middleware),
-controller.remove.bind(controller))                        
+router.post('/signUp',middleware.signUpValidation.bind(middleware)
+        ,controller.signUp.bind(controller))                     
 export default router;

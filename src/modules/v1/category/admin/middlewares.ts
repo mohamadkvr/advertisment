@@ -8,7 +8,6 @@ const util = Utils.getInstance()
 
 export default new class middleware extends DbService{
     async createValidation(req:Request,res:Response,next:NextFunction){
-        console.log('aliiiiiiiiiiiiiiiiiiiiiiiiiii')
         const { error } = schema.validate(req.body);
         if(error) {
             const err = new CustomError(400,error ? error.message : "")

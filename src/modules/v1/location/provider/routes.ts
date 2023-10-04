@@ -3,8 +3,8 @@ import controller from './controller'
 import middleware from './middlewares'
 const router: Router = Router();
 
-router.post('/create',middleware.createValidation.bind(middleware)
-        ,controller.add.bind(controller))
+// router.post('/create',middleware.createValidation.bind(middleware)
+//         ,controller.add.bind(controller))
 router.patch('/update/:id',middleware.updateValidation.bind(middleware)
         ,controller.edit.bind(controller))
 router.get('/getOne/:id',middleware.getOneValidation.bind(middleware),

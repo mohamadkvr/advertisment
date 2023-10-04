@@ -1,6 +1,4 @@
-import { Timestamp } from 'mongodb';
 import { Document, Schema, model } from 'mongoose';
-import { IAdminGroup } from '../adminGroup/model';
 import  mongoosePaginate from 'mongoose-paginate-v2';
 
 export interface IProvider extends Document {
@@ -11,6 +9,7 @@ export interface IProvider extends Document {
   email: string;
   password: string;
   businessDescription:string;
+  accepted:boolean;
   ban:boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -31,7 +30,6 @@ const ProviderSchema = new Schema<IProvider>({
     type: String
   },
   email:{type:String},
-  password:{type:String},
   businessDescription:{type:String},
   ban:{type:Boolean}
 },{timestamps:true});

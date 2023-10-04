@@ -1,20 +1,22 @@
 import Joi from "joi";
 
 export const schema = Joi.object({
-    // title: Joi.string()
-    //     .alphanum()
-    //     .min(10)
-    //     .max(50)
-    //     .required(),
-    // slug: Joi.string()
-    //     .alphanum()
-    //     .min(10)
-    //     .max(50)
-    //     .required(),    
-    // description: Joi.string()
-    // .min(10)
-    // .max(1000),
-    // parentId:Joi.string().pattern(/^[0-9a-fA-F]{24}$/)
+    firstName: Joi.string()
+        .alphanum()
+        .required(),
+    lastName: Joi.string()
+        .alphanum()
+        .required(),
+    nationalNumber: Joi.string()
+        .alphanum()
+        .required(),
+    phoneNumber: Joi.string()
+        .alphanum()
+        .required(),    
+    email: Joi.string(), 
+    businessDescription: Joi.string()
+    .min(10)
+    .max(5000)
 })
 
 

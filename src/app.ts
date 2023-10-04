@@ -6,6 +6,7 @@ import morgan from "morgan";
 import categoryRouter from './modules/v1/category/admin/routes'
 import userCategoryRouter from './modules/v1/category/user/routes'
 import adminAuthenticationRouter from './modules/v1/admin/auth/routes'
+import providerRoutes from './modules/v1/provider/auth/routes'
 import cookieParser from 'cookie-parser';
 
 import { IError } from "./services/v1/helper/error";
@@ -59,6 +60,8 @@ export class App {
         //////////////////////user/////////////////////////////////////
         // category
         this.app.use('/api/v1/user/category',userCategoryRouter)
+        /////////////////////provider/////////////////////////////////
+        this.app.use('/api/v1/provider/auth',providerRoutes)
         
     }
     private async setSeeds(){
