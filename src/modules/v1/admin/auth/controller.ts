@@ -9,7 +9,7 @@ export default new class service extends DbService {
         try {
             let admin = await this.findOne(this.schemaHandler('admin'),{email:req.body.email})
             const expirationTimeInSeconds = 60 * 60 * 24 * 7 * 2;
-            return util.responseHandler(res,200,util.responseMsgHandler(req.method,"token"),{token:util.generateToken({_id:admin._id},process.env.SECRET_KEY || "" ,{expiresIn:expirationTimeInSeconds})})
+            return util.responseHandler(res,200,util.responseMsgHandler("login","token"),{token:util.generateToken({_id:admin._id},process.env.SECRET_KEY || "" ,{expiresIn:expirationTimeInSeconds})})
         } catch (error) {
               next(error)
         }

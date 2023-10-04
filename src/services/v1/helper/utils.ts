@@ -1,6 +1,8 @@
 import {Response } from 'express';
 import jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
+const NodeCache = require("node-cache");
+const memory = new NodeCache();
 
 
 interface IUtils {
@@ -20,7 +22,8 @@ export class Utils implements IUtils{
         return method === "GET" ?  msg +" با موفقیت ارسال شد."  :
                method === "POST" ? msg + " باموفقیت ساخته شد.":
                method === "PATCH" ? msg + " با موفقیت اپدیت شد."  :
-               method === "DELETE" ? msg +  " با موفقیت حذف شد.": ""
+               method === "DELETE" ? msg +  " با موفقیت حذف شد.":
+               method === 'login' ? msg + "وارد شدید" :  ""
     }
     public responseHandler(res:Response,status:number , msg: string, data: Object | null):object {
           return res.status(status).json({
@@ -61,4 +64,23 @@ export class Utils implements IUtils{
       }
       return result;
     }
+    public async setCache(key:any, data:any, time:any) {
+      if (data) memory.set(key, data, time);
+  };
+    public async msetCache(key:any, data:any, time:any) {
+      if (data) memory.mset(key, data, time);
+  };
+    public async getCache(key:any) {
+      if (key) {
+          return await memory.get(key);
+      }
+  };
+    public async getTakeCache(key:any) {
+      return await memory.take(key);
+  };
+    public async delCache(key:any) {
+      if (key) {
+          memory.del(key);
+      }
+  };
 }
